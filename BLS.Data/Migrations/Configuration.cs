@@ -1,13 +1,12 @@
+using System;
 using System.Collections.Generic;
 using BLS.Core.Data;
-using BLS.Data.BLDbContext;
 
 namespace BLS.Data.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<BlDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<BLDbContext.BlDbContext>
     {
         public Configuration()
         {
@@ -15,7 +14,7 @@ namespace BLS.Data.Migrations
             AutomaticMigrationDataLossAllowed = false;
         }
 
-        protected override void Seed(BlDbContext context)
+        protected override void Seed(BLDbContext.BlDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -29,7 +28,6 @@ namespace BLS.Data.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-
             var books = new List<Book>
             {
                 new Book
@@ -41,7 +39,8 @@ namespace BLS.Data.Migrations
                     Publisher = "England",
                     PublishedDate = new DateTime(2017,5,18),
                     AddedDate = new DateTime(2017,5,18),
-                    ModifiedDate = new DateTime(2017,5,18)
+                    ModifiedDate = new DateTime(2017,5,18),
+                    Ip = "192.168.1.1"
                 },
                 new Book
                 {
@@ -52,7 +51,8 @@ namespace BLS.Data.Migrations
                     Publisher = "France",
                     PublishedDate = new DateTime(2017,5,19),
                     AddedDate = new DateTime(2017,5,19),
-                    ModifiedDate = new DateTime(2017,5,19)
+                    ModifiedDate = new DateTime(2017,5,19),
+                    Ip = "192.168.1.1"
                 },
                 new Book
                 {
@@ -63,7 +63,8 @@ namespace BLS.Data.Migrations
                     Publisher = "Spain",
                     PublishedDate = new DateTime(2017,5,20),
                     AddedDate = new DateTime(2017,5,20),
-                    ModifiedDate = new DateTime(2017,5,20)
+                    ModifiedDate = new DateTime(2017,5,20),
+                    Ip = "192.168.1.1"
                 }
             };
 

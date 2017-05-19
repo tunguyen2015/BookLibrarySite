@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using BLS.Core;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
-using BLS.Core.Infrastructure;
 using BLS.Data.BLDbContext;
+using BLS.Data.Infrastructure;
 
 namespace BLS.Data.Repository
 {
@@ -21,17 +20,17 @@ namespace BLS.Data.Repository
             _context = context;
         }
 
-        public async Task<ICollection<T>> GetAll()
+        public IEnumerable<T> GetAll()
         {
-            return await Entities.ToListAsync();
+            return Entities.ToList();
         }
 
-        public async Task<T> GetById(int id)
+        public T GetById(object id)
         {
-            return await _context.Set<T>().FirstOrDefaultAsync(b => b.Id == id);
+            return Entities.Find(id);
         }
 
-        public async Task<T> Add(T entity)
+        public T Add(T entity)
         {
             try
             {
@@ -40,7 +39,7 @@ namespace BLS.Data.Repository
                     throw new ArgumentNullException(nameof(entity));
                 }
                 Entities.Add(entity);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
             }
             catch (DbEntityValidationException dbEx)
             {
@@ -56,27 +55,28 @@ namespace BLS.Data.Repository
             return entity;
         }
 
-        public async Task<T> Edit(T entity, int key)
+        public T Edit(T entity, int key)
         {
             if (entity == null)
             {
                 return null;
             }
 
-            var existingObject = await _context.Set<T>().FirstOrDefaultAsync(b => b.Id == key);
+            var existingObject = _context.Set<T>().Find(key);
 
             if (existingObject != null)
             {
                 _context.Entry(existingObject).CurrentValues.SetValues(entity);
-                await _context.SaveChangesAsync();
+                _context.SaveChangesAsync();
             }
             return existingObject;
         }
 
-        public async Task<int> Delete(T entity)
+        public void Delete(object id)
         {
-            Entities.Remove(entity);
-            return await _context.SaveChangesAsync();
+            var entities = Entities.Find(id);
+            Entities.Remove(entities);
+            _context.SaveChanges();
         }
 
         public virtual IQueryable<T> Table => Entities;

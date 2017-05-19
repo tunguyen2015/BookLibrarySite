@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using BLS.Core.Data;
-using BLS.Core.Infrastructure;
 using BLS.Data.Infrastructure;
 
 namespace BLS.Services
@@ -15,29 +13,29 @@ namespace BLS.Services
             _bookRepository = unitOfWork.Repository<Book>();
         }
 
-        public async Task<ICollection<Book>> GetAll()
+        public IEnumerable<Book> GetAll()
         {
-            return await _bookRepository.GetAll();
+            return _bookRepository.GetAll();
         }
 
-        public async Task<Book> GetById(int id)
+        public Book GetById(int id)
         {
-            return await _bookRepository.GetById(id);
+            return _bookRepository.GetById(id);
         }
 
-        public async Task<Book> Add(Book books)
+        public Book Add(Book books)
         {
-            return await _bookRepository.Add(books);
+            return _bookRepository.Add(books);
         }
 
-        public async Task<Book> Edit(Book books, int key)
+        public Book Edit(Book books, int key)
         {
-            return await _bookRepository.Edit(books, key);
+            return _bookRepository.Edit(books, key);
         }
 
-        public async Task<int> Delete(Book books)
+        public void Delete(Book books)
         {
-            return await _bookRepository.Delete(books);
+            _bookRepository.Delete(books);
         }
     }
 }
