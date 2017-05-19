@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BLS.Core.Data;
-using BLS.Data.Repository;
-using BLS.Data.UnitOfWork;
+using BLS.Core.Infrastructure;
+using BLS.Data.Infrastructure;
 
 namespace BLS.Services
 {
@@ -20,7 +20,7 @@ namespace BLS.Services
             return await _bookRepository.GetAll();
         }
 
-        public async Task<Book> GetById(object id)
+        public async Task<Book> GetById(int id)
         {
             return await _bookRepository.GetById(id);
         }

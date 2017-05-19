@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using BLS.Core;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
+using BLS.Core.Infrastructure;
+using BLS.Data.BLDbContext;
 
 namespace BLS.Data.Repository
 {
-    public class Repository<T> : IRepository<T> where T: BaseEntity
+    public class Repository<T> : IRepository<T> where T: BaseEntity<int>
     {
         private readonly BlDbContext _context;
         private IDbSet<T> _entities;
@@ -24,9 +26,9 @@ namespace BLS.Data.Repository
             return await Entities.ToListAsync();
         }
 
-        public async Task<T> GetById(object id)
+        public async Task<T> GetById(int id)
         {
-            return await _context.Set<T>().FindAsync(id);
+            return await _context.Set<T>().FirstOrDefaultAsync(b => b.Id == id);
         }
 
         public async Task<T> Add(T entity)
@@ -61,7 +63,7 @@ namespace BLS.Data.Repository
                 return null;
             }
 
-            var existingObject = await _context.Set<T>().FindAsync(key);
+            var existingObject = await _context.Set<T>().FirstOrDefaultAsync(b => b.Id == key);
 
             if (existingObject != null)
             {

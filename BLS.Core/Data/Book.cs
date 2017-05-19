@@ -2,7 +2,7 @@
 
 namespace BLS.Core.Data
 {
-    public class Book : BaseEntity
+    public class Book : BaseEntity<int>
     {
         public string Title { get; set; }
         public string Author { get; set; }

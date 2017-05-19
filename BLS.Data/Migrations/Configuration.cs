@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using BLS.Core.Data;
+using BLS.Data.BLDbContext;
 
 namespace BLS.Data.Migrations
 {

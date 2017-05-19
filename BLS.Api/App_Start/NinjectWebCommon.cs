@@ -1,7 +1,11 @@
+using BLS.Core.Infrastructure;
+using BLS.Data.BLDbContext;
+using BLS.Data.Infrastructure;
 using BLS.Data.Repository;
+using BLS.Data.UnitOfWork;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(BLS.Api.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(BLS.Api.App_Start.NinjectWebCommon), "Stop")]
+[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(BLS.Api.App_Start.NinjectWebCommon), "Stop")]
 
 namespace BLS.Api.App_Start
 {
@@ -12,7 +16,6 @@ namespace BLS.Api.App_Start
 
     using Ninject;
     using Ninject.Web.Common;
-    using BLS.Services;
 
     public static class NinjectWebCommon 
     {
@@ -64,8 +67,9 @@ namespace BLS.Api.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            kernel.Bind<IBlDbContext>().To<BlDbContext>().InRequestScope();
             kernel.Bind(typeof(IRepository<>)).To(typeof(Repository<>)).InRequestScope();
-            kernel.Bind<IBookService>().To<BookService>();
+            kernel.Bind<IUnitOfWork>().To<UnitOfWork>().InRequestScope();
         }        
     }
 }

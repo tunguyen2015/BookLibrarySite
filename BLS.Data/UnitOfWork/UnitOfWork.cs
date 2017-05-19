@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using BLS.Core;
+using BLS.Data.BLDbContext;
+using BLS.Data.Infrastructure;
 using BLS.Data.Repository;
 
 namespace BLS.Data.UnitOfWork
@@ -34,7 +36,7 @@ namespace BLS.Data.UnitOfWork
             _disposed = true;
         }
 
-        public Repository<T> Repository<T>() where T : BaseEntity
+        public Repository<T> Repository<T>() where T : BaseEntity<int>
         {
             if (_repositories == null)
             {
